@@ -22,6 +22,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         // dd(auth()->user());
+
         $role = Role::where('name' , 'Admin')->first();
         //  dd($role);
 
