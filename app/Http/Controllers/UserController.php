@@ -23,16 +23,16 @@ class UserController extends Controller
     {
         // dd(auth()->user());
 
-        $role = Role::where('name' , 'Admin')->first();
-        //  dd($role);
+        // $role = Role::where('name' , 'Admin')->first();
+        // //  dd($role);
 
-        $permissions = Permission::pluck('id')->all();
+        // $permissions = Permission::pluck('id')->all();
         
-        $role->syncPermissions($permissions);
+        // $role->syncPermissions($permissions);
   
-        auth()->user()->assignRole([$role->id]);
+        // auth()->user()->assignRole([$role->id]);
         
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $data = User::latest()->paginate(5);
         return view('users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -130,7 +130,7 @@ class UserController extends Controller
         if(!empty($input['password'])){ 
             $input['password'] = Hash::make($input['password']);
         }else{
-            $input = array_except($input,array('password'));    
+            $input = $request->all();    
         }
 
 
